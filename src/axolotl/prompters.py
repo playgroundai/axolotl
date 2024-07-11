@@ -34,8 +34,8 @@ class AlpacaPrompter(Prompter):
     Base class for alpaca prompters
     """
 
-    system_prompt = "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request."
-    system_no_input_prompt = "Below is an instruction that describes a task. Write a response that appropriately completes the request."
+    system_prompt = ""
+    system_no_input_prompt = ""
     system_format: str = "{system}"
     turn_format: str
     turn_no_input_format: str
@@ -64,9 +64,9 @@ class AlpacaPrompter(Prompter):
             )
             self.system_format = "<|im_start|>system\n{system}<|im_end|>\n"
         elif self.prompt_style == PromptStyle.PHI.value:
-            self.turn_format = "<|user|>\n{instruction}<|end|>{input}<|assistant|>"
-            self.turn_no_input_format = "<|user|>\n{instruction}<|end|><|assistant|>"
-            self.system_format = "<|system|>{system}\n"
+            self.turn_format = "<|user|>\n{instruction}\n{input}<|end|>\n<|assistant|>\n"
+            self.turn_no_input_format = "<|user|>\n{instruction}<|end|>\n<|assistant|>\n"
+            self.system_format = "<|system|>\n{system}\n"
 
     def _build_result(self, instruction, input_text, output):
         # returns the full prompt from instruction and optional input
